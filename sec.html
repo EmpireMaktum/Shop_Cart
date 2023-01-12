@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="sec.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">BookStall</h2>
+        <div class="line"></div>
+        <div class="box">
+            <div class="userdata">
+                <input type="submit" value="Python" id="python" onclick="books(this.id)"/>
+                <input type="submit" value="Java" id="java" onclick="books(this.id)"/>
+                <input type="submit" value="Php" id="php" onclick="books(this.id)"/><br><br>
+            </div><!--userdata 1 Close-->
+            <div class="userdata">
+                <span>Product Name</span><br>
+               <input type="text" name="product" id="product" autocomplete="off" readonly/><br><br>
+            </div><!--userdata 2 Close-->
+            <div class="userdata">
+                <span>Price</span><br>
+                <input type="text" name="price" id="price" autocomplete="off" readonly/><br><br>
+            </div><!--userdata 3 Close-->
+            <div class="userdata-btn">
+                    <input type="submit" class="minus" value="-" id="-" onclick="books(this.id)"/>
+                    <input type="text" name="box" value="1" id="box"/>
+                    <input type="submit" class="plus" value="+" id="+" onclick="books(this.id)"/><br><br>
+            </div>
+            <div class="userdata">
+                <span>Total</span><br>
+                <input type="text" name="total" id="total" autocomplete="off" readonly/><br><br>
+            </div>
+            <div class="btns">
+                <button type="submit" onclick="Addrow()">Add-to-Cart</button>
+                <button type="reset">Reset</button>
+            </div> 
+        </div><!--Box close-->
+    </div><!--Container Close-->
+    <div class="vartical-bar"></div>
+        <div class="tabdata">
+            <h2 class="Carthead">Cart Page</h2>
+            <table id="display">
+                <tr>
+                    <td style="padding-bottom: 10px; border-bottom: 2px solid black;">Product</td>
+                    <td style="padding-bottom: 10px; border-bottom: 2px solid black;">Price</td>
+                    <td style="padding-bottom: 10px; border-bottom: 2px solid black;">Quantityt</td>
+                    <td style="padding-bottom: 10px; border-bottom: 2px solid black;">Total Price</td>
+                </tr>
+            </table>
+        </div>
+    
+    <script>
+         function books(val){
+            product = document.getElementById("product").value;
+            price = document.getElementById("price").value;
+            total = document.getElementById("total").value;
+            switch(val){
+                case "python" : document.getElementById("product").value = "PYTHON";
+                                document.getElementById("price").value = 1000;
+                                document.getElementById("total").value = 1000;
+                                break;
+                case "java" : document.getElementById("product").value = "JAVA";
+                                document.getElementById("price").value = 800;
+                                document.getElementById("total").value = 800;
+                                break;
+                case "php" : document.getElementById("product").value = "PHP";
+                                document.getElementById("price").value = 500;
+                                document.getElementById("total").value = 500;
+                                break;
+                case "-"   :c =  document.getElementById("box").value;
+                                c=parseInt(c);
+                                a = document.getElementById("price").value;
+                                k = c -1;
+                                document.getElementById("box").value = k;
+                                g = k * a;
+                                document.getElementById("total").value = g;
+                                if(c < 1){
+                                    alert("You Can't Used Negative Numbers!");
+                                    document.getElementById("total").value = "Maintain Standard Format";
+                                }
+                                else{
+                                    document.getElementById("box").value = c -1;
+                                }
+                                break;
+                case "+"   :c =  document.getElementById("box").value;
+                                c=parseInt(c);
+                                a = document.getElementById("price").value;
+                                k = c + 1;
+                                document.getElementById("box").value = k;
+                                g = k * a;
+                                document.getElementById("total").value = g;             
+
+            }
+         }
+
+         var list1 = [];
+         var list2 = [];
+         var list3 = [];
+         var list4 = [];
+         var list5 = [];
+
+         var n = 1;
+         var x = 0;
+    function Addrow(){
+         var AddRow = document.getElementById('display');
+         var NewRow = AddRow.insertRow(n);
+
+         list1[x] = document.getElementById("product").value;
+         list2[x] = document.getElementById("price").value;
+         list3[x] = document.getElementById("box").value;
+         list4[x] = document.getElementById("total").value;
+
+         var Cel1 = NewRow.insertCell(0);
+         var Cel2 = NewRow.insertCell(1);
+         var Cel3 = NewRow.insertCell(2);
+         var Cel4 = NewRow.insertCell(3);
+        var Cel5 = NewRow.insertCell(4);
+
+         Cel1.innerHTML = list1[x];
+         Cel2.innerHTML = list2[x];
+         Cel3.innerHTML = list3[x];
+         Cel4.innerHTML = list4[x];
+         Cel5.innerHTML = `<button onClick="onRemove(this)" style="width: 100px; height: 45px; background: rgb(6, 6, 49); color: #fff; margin-left: 20%;";
+">Remove</button>
+         <button onClick="onPay()" style="width: 100px; height: 45px; background: rgb(6, 6, 49); color: #fff"">Payment</button>`;
+        
+         n++;
+         x++;
+    }   
+
+    function onRemove(td){
+        if(confirm("Do you want to Remove this item from the Cart?")){
+            row = td.parentElement.parentElement;
+            document.getElementById('display').deleteRow(row.rowIndex);
+            resetForm();
+        }
+    }
+    </script>
+</body>
+</html>
